@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Dashboard, Signin, Signup, Verify, Reset, Navbar } from "./components/_index";
+import { Dashboard, Signin, Signup, Verify, Reset, Navbar, Project, CreateTable, CreateProject } from "./components/_index";
 
 
 function App() {
@@ -12,6 +12,10 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/verify/:token" element={<Verify />} />
         <Route path="/reset/:token" element={<Reset />} />
+        <Route path="/project/:name" element={< Project />} />
+        <Route path="/createtable/:project" element={<CreateTable />} />
+        <Route path="/createproject" element={<CreateProject />} />
+
 
         <Route path="/" element={<Dashboard />} />
 
