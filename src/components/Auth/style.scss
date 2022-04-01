@@ -57,7 +57,10 @@ $c3: #849e9b;
     background-color: $c1;
   }
   .submit-btn:hover {
-    box-shadow: 4px 4px 10px $c2;
+    box-shadow: 2px 2px 5px $c2;
+  }
+  .submit-btn:disabled {
+    background-color: $c2;
   }
 }
 
