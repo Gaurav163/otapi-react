@@ -63,6 +63,18 @@ $c3: #849e9b;
     background-color: $c2;
   }
 }
+.modal {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid $c1;
+  padding: 10px;
+  text-align: center;
+}
 
 @media (max-width: 600px) {
   .form {

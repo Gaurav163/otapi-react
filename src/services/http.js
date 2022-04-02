@@ -15,18 +15,10 @@ const http = axios.create({
 http.defaults.headers.common['x-auth-token'] = localStorage.getItem("token");
 
 
-http.interceptors.request.use(request => {
-    console.log(request);
-    return request;
-}, error => {
-    console.log(error);
-    return Promise.reject(error);
-});
+;
 
 
-http.interceptors.response.use(response => {
-    console.log(response);
-}, error => {
+http.interceptors.response.use(null, error => {
     const expectedError = error.response && error.response.status >= 400 && error.response.status < 500;
     console.log("Error", error)
     if (!expectedError) {

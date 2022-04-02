@@ -1,28 +1,70 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { Link } from "react-router-dom";
+import http from "../../services/http";
+import { Checkbox, CircularProgress, Snackbar } from "@mui/material";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [password1, setPassword1] = useState("");
+  let [visible, setVisible] = useState(false);
+  let [loading, setLoading] = useState(false);
+  let [open, setOpen] = useState(0);
+  let [message, setMessage] = useState("");
 
-  const handleSignup = () => {
+  const handleClose = () => setOpen(0);
+
+  const handleVisible = () => setVisible(!visible);
+
+  const handleSignup = async () => {
+    if (email === "") {
+      setMessage("Email is required");
+      setOpen(1);
+      console.log(message);
+      return;
+    }
+    if (name === "") {
+      setMessage("Name is required");
+      setOpen(1);
+      return;
+    }
+    if (password.length < 8) {
+      setMessage("Password have atleast 8 characters");
+      setOpen(1);
+      return;
+    }
     if (password1 !== password) {
-      console.log("password not matched");
+      setMessage("Password not matched");
+      setOpen(1);
+      return;
     }
     const user = {
       email,
       name,
       password,
     };
-    console.log(user);
+    setLoading(true);
+    try {
+      console.log(user);
+      const response = await http.post("/user/signup", user);
+      console.log(response);
+      setMessage("SignUp Success");
+      setOpen(1);
+      setTimeout(() => {
+        window.location.replace("/signin");
+      }, 3000);
+    } catch (error) {
+      console.log(error.response.data.message);
+      setMessage(error.response.data.message);
+      setOpen(1);
+      setLoading(false);
+    }
   };
   return (
     <div className="form">
       <h2>Create New Account</h2>
-
       <label htmlFor="email">Email</label>
       <input
         type="text"
@@ -42,7 +84,7 @@ const Signup = () => {
       <br />
       <label htmlFor="password">Password</label>
       <input
-        type="password"
+        type={visible ? "text" : "password"}
         id="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -50,16 +92,17 @@ const Signup = () => {
       <br />
       <label htmlFor="password1">Re-enter Password</label>
       <input
-        type="password"
+        type={visible ? "text" : "password"}
         id="password1"
         value={password1}
         onChange={(e) => setPassword1(e.target.value)}
       ></input>
       <br />
-      <button className="submit-btn" onClick={handleSignup} disabled>
-        Sign Up
+      <Checkbox size="small" onChange={handleVisible} checked={visible} />
+      <small>Show Password</small>
+      <button className="submit-btn" onClick={handleSignup} disabled={loading}>
+        {!loading ? "Sign Up" : <CircularProgress size={16} color="inherit" />}
       </button>
-
       <br />
       <br />
       <hr />
@@ -69,6 +112,13 @@ const Signup = () => {
           Log In
         </Link>
       </div>
+      <Snackbar
+        open={open !== 0}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        size="small"
+        message={open === 1 && message}
+      ></Snackbar>
     </div>
   );
 };
