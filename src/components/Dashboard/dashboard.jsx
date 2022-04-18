@@ -11,7 +11,9 @@ const Dashboard = () => {
   ]);
   return (
     <div className="dashboard">
-      <h3>My Projects</h3>
+      <div style={{ fontSize: "x-large", fontWeight: "500", margin: "20px" }}>
+        My Projects
+      </div>
       <hr />
       {projects.map((project) => (
         <div

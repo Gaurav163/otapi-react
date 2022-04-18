@@ -1,11 +1,4 @@
-
-
-
-
-
-
 import axios from 'axios';
-
 
 
 const http = axios.create({
@@ -14,8 +7,6 @@ const http = axios.create({
 
 http.defaults.headers.common['x-auth-token'] = localStorage.getItem("token");
 
-
-;
 
 
 http.interceptors.response.use(null, error => {

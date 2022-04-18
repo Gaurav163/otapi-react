@@ -10,22 +10,25 @@ $c3: #849e9b;
 
 .createtable {
   margin: 20px auto;
-  width: 70%;
+  width: 60%;
   min-width: 400px;
   border-radius: 10px;
   box-shadow: 2px 2px 5px $c3;
   padding: 10px 50px;
-  font-size: small;
+  font-size: large;
   font-weight: 400;
-  h2 {
+  .hed {
     font-weight: 500;
     text-align: center;
+    font-size: x-large;
+    color: $c1;
+    padding: 20px;
   }
   input,
   select {
     background-color: white;
-    width: 95%;
-    padding: 8px;
+    width: 100%;
+    padding: 10px;
     border: 2px solid $c3;
     border-radius: 5px;
     margin: 5px 0 5px 0;
@@ -79,7 +82,7 @@ $c3: #849e9b;
     margin: 10px;
   }
   .column:hover {
-    background-color: #e8f0ef;
+    background-color: #f5f5f5;
     box-shadow: 2px 2px 4px #e2e2e2;
   }
 }
@@ -92,11 +95,14 @@ $c3: #849e9b;
   border-radius: 10px;
   box-shadow: 2px 2px 6px $c3;
   padding: 10px 50px;
-  font-size: small;
+  font-size: large;
   font-weight: 400;
-  h2 {
+  .hed {
     font-weight: 500;
     text-align: center;
+    font-size: x-large;
+    color: $c1;
+    padding: 20px;
   }
   input {
     background-color: white;

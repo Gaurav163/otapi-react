@@ -64,22 +64,22 @@ const Signup = () => {
   };
   return (
     <div className="form">
-      <h2>Create New Account</h2>
-      <label htmlFor="email">Email</label>
-      <input
-        type="text"
-        id="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      ></input>
-      <br />
+      <div className="hed">Create New Account</div>
+
       <label htmlFor="name">Name</label>
       <input
         type="text"
         id="name"
         value={name}
         onChange={(e) => setName(e.target.value)}
+      ></input>
+      <br />
+      <label htmlFor="email">Email</label>
+      <input
+        type="text"
+        id="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       ></input>
       <br />
       <label htmlFor="password">Password</label>
