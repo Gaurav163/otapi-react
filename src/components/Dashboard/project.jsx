@@ -6,6 +6,7 @@ import "./style.scss";
 const Project = () => {
   let [count, setCount] = useState(0);
   let [display, setDisplay] = useState({});
+  let [info, setinfo] = useState({});
   let params = useParams();
   let [tables, setTables] = useState([]);
   const project = params.project;
@@ -18,7 +19,6 @@ const Project = () => {
       newdis[name] = true;
     }
     setDisplay(newdis);
-    console.log(newdis);
     setCount(count + 1);
   };
 
@@ -26,10 +26,10 @@ const Project = () => {
     try {
       console.log("/project/" + project);
       const resp = await http.get("/project/" + project);
-      console.log(resp.data);
       setTables(resp.data.tables);
-      console.log(tables);
-      setCount(count + 1);
+      const pinfo = resp.data;
+      delete pinfo.tables;
+      setinfo(pinfo);
     } catch (error) {
       console.log(error.response);
     }
@@ -39,9 +39,7 @@ const Project = () => {
     loadProject();
   }, []);
 
-  useEffect(() => {
-    console.log("wow", tables);
-  }, [count]);
+  useEffect(() => {}, [info, tables, count]);
 
   return (
     <div className="tables">

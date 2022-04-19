@@ -14,6 +14,8 @@ function getUser() {
 
 function logout() {
     localStorage.removeItem(tokenKey);
+    localStorage.removeItem("name");
+    localStorage.removeItem("email");
 }
 
 export default {

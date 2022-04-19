@@ -1,4 +1,4 @@
-import { Routes, Route, Redirect } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Dashboard, Signin, Signup, Verify, Reset, Navbar, Project, CreateTable, CreateProject } from "./components/_index";
 import auth from "./services/auth";
 import React from 'react';

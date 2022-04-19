@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { CircularProgress, Snackbar } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import http from "../../services/http";
 
 import "./create.scss";
@@ -10,7 +11,6 @@ const CreateTable = () => {
   let [list, setList] = useState([]);
   let [name, setName] = useState("");
   let [tablename, setTablename] = useState("");
-  let [count, setCount] = useState(0);
   let [loading, setLoading] = useState(false);
   let [open, setOpen] = useState(0);
   let [message, setMessage] = useState("");
@@ -22,16 +22,14 @@ const CreateTable = () => {
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-    setCount(count + 1);
   };
 
   const handleTablename = (e) => {
     setTablename(e.target.value);
-    setCount(count + 1);
   };
 
   const handleAddColumn = () => {
-    if (/^([a-z][a-z0-9-]{4,})$/.test(name) === false) {
+    if (/^([a-z][a-z0-9-]{2,})$/.test(name) === false) {
       setMessage("Column Name Invalid. Please Read Points.");
       setOpen(1);
       return;
@@ -53,11 +51,22 @@ const CreateTable = () => {
         newList.push(name);
         setList(newList);
         setName("");
-        setCount(count + 1);
 
         console.log(schema, list);
       }
     }
+  };
+
+  const handleRemoveColumn = (name) => {
+    console.log(name);
+    let newList = list.filter((col) => col !== name);
+    let newSchema = schema;
+    delete newSchema[name];
+    setSchema(newSchema);
+    setList(newList);
+
+    console.log(list);
+    console.log(schema);
   };
 
   const handletypeChange = (e, name) => {
@@ -107,7 +116,7 @@ const CreateTable = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {}, [count]);
+  useEffect(() => {});
   return (
     <div>
       <div className="createtable">
@@ -135,27 +144,39 @@ const CreateTable = () => {
         Columns
         {list.map((col) => (
           <div key={col} className="column">
-            <span>Name: </span>
-            <input type="text" className="width-s" value={col} readOnly />
-            <span> Type: </span>
-            <select
-              className="width-s"
-              onChange={(e) => handletypeChange(e, col)}
-            >
-              <option value="String">String</option>
-              <option value="Number">Number</option>
-              <option value="Boolean">Boolean</option>
-              <option value="Object">Object</option>
-              {/* <option value="Array">Array</option> */}
-            </select>
-            <span> Required: </span>
-            <select
-              className="width-s"
-              onChange={(e) => handleRequiredChange(e, col)}
-            >
-              <option value="false">false</option>
-              <option value="true">true</option>
-            </select>
+            <div>
+              <span>Name: </span>
+              <input type="text" className="width-s" value={col} readOnly />
+              <span> Type: </span>
+              <select
+                className="width-s"
+                onChange={(e) => handletypeChange(e, col)}
+              >
+                <option value="String">String</option>
+                <option value="Number">Number</option>
+                <option value="Boolean">Boolean</option>
+                <option value="Object">Object</option>
+                {/* <option value="Array">Array</option> */}
+              </select>
+
+              <span> Required: </span>
+              <select
+                className="width-s"
+                onChange={(e) => handleRequiredChange(e, col)}
+              >
+                <option value="false">false</option>
+                <option value="true">true</option>
+              </select>
+            </div>
+            <div>
+              <CloseIcon
+                sx={{
+                  float: "right",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleRemoveColumn(col)}
+              />
+            </div>
           </div>
         ))}
         <br />
