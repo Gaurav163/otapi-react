@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { Backdrop, CircularProgress } from "@mui/material";
 import http from "../../services/http";
+import { Add, Remove } from "@mui/icons-material";
 import "./style.scss";
 
 const Project = () => {
   let [count, setCount] = useState(0);
   let [display, setDisplay] = useState({});
   let [info, setinfo] = useState({});
+  let [open, setOpen] = useState(true);
   let params = useParams();
   let [tables, setTables] = useState([]);
   const project = params.project;
@@ -30,6 +33,7 @@ const Project = () => {
       const pinfo = resp.data;
       delete pinfo.tables;
       setinfo(pinfo);
+      setOpen(false);
     } catch (error) {
       console.log(error.response);
     }
@@ -45,8 +49,8 @@ const Project = () => {
     <div className="tables">
       <div
         style={{
-          fontSize: "xx-large",
-          fontWeight: "700",
+          fontSize: "x-large",
+          fontWeight: "500",
           margin: "20px",
           textAlign: "center",
         }}
@@ -55,18 +59,19 @@ const Project = () => {
       </div>
       Key : {info.key}
       <hr />
-      <h3>Tables</h3>
+      <div style={{ fontSize: "large", fontWeight: "500" }}>Tables</div>
       {tables.map((table) => (
         <div key={table.name}>
           <div className="table" onClick={() => handleTableToggle(table.name)}>
-            {table.name}
+            <div>{table.name}</div>
+            <div>{display[table.name] ? <Remove /> : <Add />}</div>
           </div>
           <div
             className={
               "tabledetails " + (display[table.name] ? "" : "tablehide")
             }
           >
-            {table.name} Schema:
+            {table.name}.schema:
             <pre>{JSON.stringify(JSON.parse(table.schema), null, 4)}</pre>
           </div>
         </div>
@@ -76,6 +81,12 @@ const Project = () => {
       <Link to={`/createtable/${project}`} className="link">
         Create New Table
       </Link>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { Dashboard, Signin, Signup, Verify, Reset, Navbar, Project, CreateTable, CreateProject } from "./components/_index";
+import { Dashboard, Signin, Signup, Verify, Reset, Navbar, Project, CreateTable, CreateProject, Faq } from "./components/_index";
+
 import auth from "./services/auth";
 import React from 'react';
 
@@ -14,6 +15,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/signup" element={<Signup />} />
+        <Route path="/faq" element={<Faq />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/verify/:token" element={<Verify />} />
         <Route path="/reset/:token" element={<Reset />} />

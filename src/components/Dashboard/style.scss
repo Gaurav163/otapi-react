@@ -20,6 +20,9 @@ $c3: #849e9b;
     border-radius: 5px;
     margin-top: 10px;
     font-size: large;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
   .table:hover {
     background-color: #f0f0f0;
@@ -28,6 +31,7 @@ $c3: #849e9b;
     padding: 15px;
     border-radius: 10px;
     background-color: #f0f0f0;
+    font-family: monospace;
   }
   .tablehide {
     display: none;
@@ -51,7 +55,7 @@ $c3: #849e9b;
   box-shadow: 2px 2px 5px $c3;
   padding: 10px 50px;
   font-size: small;
-  font-weight: 400;
+  font-weight: 500;
   .project {
     color: $c1;
     cursor: pointer;

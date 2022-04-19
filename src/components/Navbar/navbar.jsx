@@ -16,7 +16,7 @@ const Navbar = () => {
         OTAPI
       </Link>
       <div className="nav-link">
-        <a href="mailto:noreply.otapi@gmai.com">Contact us</a>
+        <Link to="/faq">FAQs</Link>
         {!user && <Link to="/signin">Log In</Link>}
         {user && (
           <span
