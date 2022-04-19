@@ -12,6 +12,7 @@ const CreateTable = () => {
   let [name, setName] = useState("");
   let [tablename, setTablename] = useState("");
   let [loading, setLoading] = useState(false);
+
   let [open, setOpen] = useState(0);
   let [message, setMessage] = useState("");
   const navigate = useNavigate();
