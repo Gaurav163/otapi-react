@@ -43,9 +43,17 @@ const Project = () => {
 
   return (
     <div className="tables">
-      <div style={{ fontSize: "larger", fontWeight: "500", margin: "20px" }}>
-        Project : {project}
+      <div
+        style={{
+          fontSize: "xx-large",
+          fontWeight: "700",
+          margin: "20px",
+          textAlign: "center",
+        }}
+      >
+        Project - "{project}"
       </div>
+      Key : {info.key}
       <hr />
       <h3>Tables</h3>
       {tables.map((table) => (
