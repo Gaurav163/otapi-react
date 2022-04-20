@@ -18,6 +18,7 @@ const Dashboard = () => {
       setOpen(false);
     } catch (error) {
       console.log(error.response);
+      setOpen(false);
     }
   };
 
