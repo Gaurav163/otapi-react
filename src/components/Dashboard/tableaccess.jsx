@@ -48,7 +48,6 @@ const Access = (props) => {
         body
       );
       if (resp.status === 200) {
-        await props.loadproject();
         setOpen(true);
         setMessage(resp.data.message);
         setLoading(false);

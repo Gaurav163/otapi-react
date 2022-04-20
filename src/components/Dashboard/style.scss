@@ -17,6 +17,7 @@ $c3: #849e9b;
     border-radius: 5px;
     border: 2px solid $c2;
     cursor: pointer;
+    display: inline-block;
   }
   .table {
     color: $c1;
@@ -208,6 +209,7 @@ $c3: #849e9b;
       border-radius: 5px;
       border: 2px solid $c2;
       cursor: pointer;
+      display: inline-block;
     }
   }
   code {
