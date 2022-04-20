@@ -12,6 +12,12 @@ $c3: #849e9b;
   padding: 10px 50px;
   font-size: medium;
   font-weight: 500;
+  .keycopy {
+    padding: 10px 10px;
+    border-radius: 5px;
+    border: 2px solid $c2;
+    cursor: pointer;
+  }
   .table {
     color: $c1;
     cursor: pointer;
@@ -43,6 +49,21 @@ $c3: #849e9b;
     padding: 10px 40px;
   }
   .link:hover {
+    box-shadow: 1px 1px 4px $c2;
+  }
+  .btn {
+    cursor: pointer;
+    padding: 10px 0;
+    border-radius: 5px;
+    border: none;
+    margin: 10px 0;
+    outline: none;
+    width: 200px;
+    color: white;
+    font-weight: 600;
+    background-color: $c1;
+  }
+  button:hover {
     box-shadow: 1px 1px 4px $c2;
   }
 }

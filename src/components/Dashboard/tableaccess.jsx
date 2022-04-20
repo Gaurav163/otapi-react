@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CopyIcon from "@mui/icons-material/ContentCopy";
-import { Snackbar } from "@mui/material";
+import { Snackbar, CircularProgress } from "@mui/material";
 import http from "../../services/http";
 import "./style.scss";
 
@@ -15,6 +15,7 @@ const Access = (props) => {
   let [count, setCount] = useState(0);
   let [loading, setLoading] = useState(false);
   let [loading1, setLoading1] = useState(false);
+  let isauth = project.apiAuth;
 
   const handleClose = () => setOpen(false);
 
@@ -40,6 +41,7 @@ const Access = (props) => {
     console.log(temp);
     setLoading(true);
     const body = { ...temp };
+    setLoading(true);
     try {
       const resp = await http.post(
         "/project/secure/" + project.name + "/" + table.name,
@@ -53,7 +55,7 @@ const Access = (props) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage(error.response.data.message || "Something went Wrong");
+      setMessage(error.response?.data.message || "Something went Wrong");
       setOpen(true);
       setLoading(false);
     }
@@ -63,23 +65,23 @@ const Access = (props) => {
     console.log(auth);
     setLoading(true);
     const body = { s_auth: auth };
+    setLoading1(true);
     try {
       const resp = await http.post("/project/secureauth/" + project.name, body);
       if (resp.status === 200) {
         await props.loadproject();
         setOpen(true);
         setMessage(resp.data.message);
-        setLoading(false);
+        setLoading1(false);
       }
     } catch (error) {
-      console.log(error);
-      setMessage(error.response.data.message || "Something went Wrong");
+      console.log("error", error);
+      setMessage(error.response?.data.message || "Something went Wrong");
       setOpen(true);
-      setLoading(false);
+      setLoading1(false);
     }
   };
 
-  useEffect(() => {});
   useEffect(() => {});
 
   return (
@@ -106,6 +108,7 @@ const Access = (props) => {
                 </span>{" "}
                 <br />
                 <br />
+                Signup/Signin Access:{" "}
                 <select value={auth} onChange={(e) => handleAuth(e)}>
                   <option value="1">Disable</option>
                   <option value="2">Public Access</option>
@@ -116,8 +119,13 @@ const Access = (props) => {
                 <button
                   style={{ marginLeft: "20px" }}
                   onClick={handleSecureAuthSubmit}
+                  disabled={loading1}
                 >
-                  Save Change
+                  {!loading1 ? (
+                    "Save Change"
+                  ) : (
+                    <CircularProgress size={16} color="inherit" />
+                  )}
                 </button>
               )}
             </div>
@@ -125,8 +133,8 @@ const Access = (props) => {
           <li>
             <code>
               get :{" "}
-              <span onClick={() => handleCopy(`/${table.name}`)}>
-                /{table.name}{" "}
+              <span onClick={() => handleCopy(`/${table.name}/all`)}>
+                /{table.name}/all{" "}
                 <CopyIcon fontSize="x-small" sx={{ cursor: "pointer" }} />
               </span>
               <select
@@ -144,8 +152,8 @@ const Access = (props) => {
           <li>
             <code>
               getbyid :{" "}
-              <span onClick={() => handleCopy(`/${table.name}/:id`)}>
-                /{table.name}/:id{" "}
+              <span onClick={() => handleCopy(`/${table.name}/profile`)}>
+                /{table.name}/profile{" "}
                 <CopyIcon fontSize="x-small" sx={{ cursor: "pointer" }} />
               </span>
               <select
@@ -153,8 +161,6 @@ const Access = (props) => {
                 onChange={(e) => handleSecureUpdate(e, "s_getbyid")}
               >
                 <option value="1">Disable</option>
-                <option value="2">Public Access</option>
-                <option value="3">Secrue with key</option>
                 <option value="4">Secure with Auth</option>
                 <option value="5">Both Auth and Key</option>
               </select>
@@ -163,8 +169,8 @@ const Access = (props) => {
           <li>
             <code>
               put :{" "}
-              <span onClick={() => handleCopy(`/${table.name}/:id`)}>
-                /{table.name}/:id{" "}
+              <span onClick={() => handleCopy(`/${table.name}/profile`)}>
+                /{table.name}/profile{" "}
                 <CopyIcon fontSize="x-small" sx={{ cursor: "pointer" }} />
               </span>
               <select
@@ -172,8 +178,6 @@ const Access = (props) => {
                 onChange={(e) => handleSecureUpdate(e, "s_put")}
               >
                 <option value="1">Disable</option>
-                <option value="2">Public Access</option>
-                <option value="3">Secrue with key</option>
                 <option value="4">Secure with Auth</option>
                 <option value="5">Both Auth and Key</option>
               </select>
@@ -182,8 +186,8 @@ const Access = (props) => {
           <li>
             <code>
               delete :{" "}
-              <span onClick={() => handleCopy(`/${table.name}/:id`)}>
-                /{table.name}/:id{" "}
+              <span onClick={() => handleCopy(`/${table.name}/profile`)}>
+                /{table.name}/profile{" "}
                 <CopyIcon fontSize="x-small" sx={{ cursor: "pointer" }} />
               </span>
               <select
@@ -191,8 +195,6 @@ const Access = (props) => {
                 onChange={(e) => handleSecureUpdate(e, "s_delete")}
               >
                 <option value="1">Disable</option>
-                <option value="2">Public Access</option>
-                <option value="3">Secrue with key</option>
                 <option value="4">Secure with Auth</option>
                 <option value="5">Both Auth and Key</option>
               </select>
@@ -220,8 +222,12 @@ const Access = (props) => {
                 <option value="1">Disable</option>
                 <option value="2">Public Access</option>
                 <option value="3">Secrue with key</option>
-                <option value="4">Secure with Auth</option>
-                <option value="5">Both Auth and Key</option>
+                {isauth && (
+                  <>
+                    <option value="4">Secure with Auth</option>
+                    <option value="5">Both Auth and Key</option>
+                  </>
+                )}
               </select>
             </code>
           </li>
@@ -239,8 +245,12 @@ const Access = (props) => {
                 <option value="1">Disable</option>
                 <option value="2">Public Access</option>
                 <option value="3">Secrue with key</option>
-                <option value="4">Secure with Auth</option>
-                <option value="5">Both Auth and Key</option>
+                {isauth && (
+                  <>
+                    <option value="4">Secure with Auth</option>
+                    <option value="5">Both Auth and Key</option>
+                  </>
+                )}
               </select>
             </code>
           </li>
@@ -258,8 +268,12 @@ const Access = (props) => {
                 <option value="1">Disable</option>
                 <option value="2">Public Access</option>
                 <option value="3">Secrue with key</option>
-                <option value="4">Secure with Auth</option>
-                <option value="5">Both Auth and Key</option>
+                {isauth && (
+                  <>
+                    <option value="4">Secure with Auth</option>
+                    <option value="5">Both Auth and Key</option>
+                  </>
+                )}
               </select>
             </code>
           </li>
@@ -277,8 +291,12 @@ const Access = (props) => {
                 <option value="1">Disable</option>
                 <option value="2">Public Access</option>
                 <option value="3">Secrue with key</option>
-                <option value="4">Secure with Auth</option>
-                <option value="5">Both Auth and Key</option>
+                {isauth && (
+                  <>
+                    <option value="4">Secure with Auth</option>
+                    <option value="5">Both Auth and Key</option>
+                  </>
+                )}
               </select>
             </code>
           </li>
@@ -296,8 +314,12 @@ const Access = (props) => {
                 <option value="1">Disable</option>
                 <option value="2">Public Access</option>
                 <option value="3">Secrue with key</option>
-                <option value="4">Secure with Auth</option>
-                <option value="5">Both Auth and Key</option>
+                {isauth && (
+                  <>
+                    <option value="4">Secure with Auth</option>
+                    <option value="5">Both Auth and Key</option>
+                  </>
+                )}
               </select>
             </code>
           </li>
@@ -313,7 +335,13 @@ const Access = (props) => {
         temp.s_delete !== table.s_delete ||
         temp.s_put !== table.s_put ||
         temp.s_getbyid !== table.s_getbyid) && (
-        <button onClick={handleSecureSubmit}>Save Change</button>
+        <button onClick={handleSecureSubmit} disabled={loading}>
+          {!loading ? (
+            "Save Change"
+          ) : (
+            <CircularProgress size={16} color="inherit" />
+          )}
+        </button>
       )}
       <Snackbar
         open={open}

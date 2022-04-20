@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress, Snackbar } from "@mui/material";
 import http from "../../services/http";
 import { Add, Remove } from "@mui/icons-material";
+import CopyIcon from "@mui/icons-material/ContentCopy";
 import Access from "./tableaccess";
 import "./style.scss";
 
@@ -11,10 +12,20 @@ const Project = () => {
   let [display, setDisplay] = useState({});
   let [info, setinfo] = useState({});
   let [open, setOpen] = useState(true);
+  let [message, setMessage] = useState("");
+  let [open1, setOpen1] = useState(false);
   let params = useParams();
   let [tables, setTables] = useState([]);
 
   const project = params.project;
+
+  const handleClose = () => setOpen1(false);
+
+  const handleCopy = (text) => {
+    navigator.clipboard.writeText(text);
+    setMessage("Copied!");
+    setOpen1(true);
+  };
 
   const handleTableToggle = (name) => {
     let newdis = display;
@@ -27,16 +38,32 @@ const Project = () => {
     setCount(count + 1);
   };
   const loadProject = async () => {
+    setOpen(true);
     try {
+      setinfo({});
+      setTables([]);
+      setCount(count + 1);
       console.log("/project/" + project);
       const resp = await http.get("/project/" + project);
       const pinfo = { ...resp.data };
       delete pinfo.tables;
       setinfo(pinfo);
       setTables(resp.data.tables);
-
       setCount(count + 1);
+      setOpen(false);
+    } catch (error) {
+      console.log(error.response);
+      setOpen(false);
+    }
+  };
 
+  const handleSettingChange = async (target) => {
+    setOpen(true);
+    try {
+      console.log(target);
+      const resp = await http.get("/project/" + target + "/" + info.name);
+      console.log(resp.data);
+      loadProject();
       setOpen(false);
     } catch (error) {
       console.log(error.response);
@@ -62,7 +89,45 @@ const Project = () => {
       >
         Project - "{project}"
       </div>
-      Key : {info.key}
+      KEY :{" "}
+      <code className="keycopy" onClick={() => handleCopy(info.key)}>
+        {info.key} <CopyIcon fontSize="x-small" sx={{ cursor: "pointer" }} />
+      </code>
+      <br />
+      <br />
+      URL :{" "}
+      <code
+        className="keycopy"
+        onClick={() =>
+          handleCopy("https://ota-api.herokuapp.com/api/" + info.name)
+        }
+      >
+        {"https://ota-api.herokuapp.com/api/" + info.name}{" "}
+        <CopyIcon fontSize="x-small" sx={{ cursor: "pointer" }} />
+      </code>
+      <br />
+      <br />
+      Authentication : {info.name && !info.apiAuth ? "Disabled" : "Enabled"}
+      <br />
+      {info.name && !info.apiAuth ? (
+        <button className="btn" onClick={() => handleSettingChange("apiauth")}>
+          Enable ApiAuth
+        </button>
+      ) : (
+        <button
+          className="btn"
+          onClick={() => handleSettingChange("removeapiauth")}
+        >
+          Disbale ApiAuth
+        </button>
+      )}{" "}
+      <button
+        className="btn"
+        onClick={() => handleSettingChange("generatekey")}
+      >
+        {" "}
+        Generate New Key
+      </button>
       <hr />
       <div style={{ fontSize: "large", fontWeight: "500" }}>Tables</div>
       {tables.map((table) => (
@@ -96,6 +161,13 @@ const Project = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+      <Snackbar
+        open={open1}
+        autoHideDuration={4000}
+        onClose={handleClose}
+        size="small"
+        message={open1 && message}
+      ></Snackbar>
     </div>
   );
 };
