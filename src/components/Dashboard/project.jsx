@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { Backdrop, CircularProgress } from "@mui/material";
 import http from "../../services/http";
 import { Add, Remove } from "@mui/icons-material";
+import Access from "./tableaccess";
 import "./style.scss";
 
 const Project = () => {
@@ -12,6 +13,7 @@ const Project = () => {
   let [open, setOpen] = useState(true);
   let params = useParams();
   let [tables, setTables] = useState([]);
+
   const project = params.project;
 
   const handleTableToggle = (name) => {
@@ -24,15 +26,17 @@ const Project = () => {
     setDisplay(newdis);
     setCount(count + 1);
   };
-
   const loadProject = async () => {
     try {
       console.log("/project/" + project);
       const resp = await http.get("/project/" + project);
-      setTables(resp.data.tables);
-      const pinfo = resp.data;
+      const pinfo = { ...resp.data };
       delete pinfo.tables;
       setinfo(pinfo);
+      setTables(resp.data.tables);
+
+      setCount(count + 1);
+
       setOpen(false);
     } catch (error) {
       console.log(error.response);
@@ -43,7 +47,7 @@ const Project = () => {
     loadProject();
   }, []);
 
-  useEffect(() => {}, [info, tables, count]);
+  useEffect(() => {}, [count]);
 
   return (
     <div className="tables">
@@ -73,6 +77,7 @@ const Project = () => {
           >
             {table.name}.schema:
             <pre>{JSON.stringify(JSON.parse(table.schema), null, 4)}</pre>
+            <Access info={info} table={table} loadproject={loadProject} />
           </div>
         </div>
       ))}
@@ -81,6 +86,9 @@ const Project = () => {
       <Link to={`/createtable/${project}`} className="link">
         Create New Table
       </Link>
+      <br />
+      <br />
+      <br />
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}

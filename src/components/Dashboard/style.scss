@@ -137,6 +137,63 @@ $c3: #849e9b;
   }
 }
 
+.access {
+  font-family: monospace !important;
+  margin: 20px 2.5%;
+  padding: 20px 2.5%;
+  width: 90%;
+  box-shadow: 2px 2px 5px grey;
+  border-radius: 10px;
+  background-color: white;
+  color: $c1;
+
+  select {
+    background-color: white;
+    border: 2px solid $c2;
+    border-radius: 5px;
+    margin: 5px 0 5px 0;
+    outline: none;
+    -webkit-transition: 0.1s;
+    transition: 0.1s;
+    padding: 10px;
+    width: 200px !important;
+    margin-left: 20px;
+    text-align: center;
+  }
+
+  button {
+    cursor: pointer;
+    padding: 10px 0;
+    border-radius: 5px;
+    border: none;
+    margin: 10px 0;
+    outline: none;
+    width: 200px;
+    color: white;
+    font-weight: 600;
+    background-color: $c1;
+  }
+  .submit-btn {
+    width: 100%;
+  }
+  button:hover {
+    box-shadow: 4px 4px 10px $c2;
+  }
+
+  li {
+    margin: 10px;
+    span {
+      padding: 10px 10px;
+      border-radius: 5px;
+      border: 2px solid $c2;
+      cursor: pointer;
+    }
+  }
+  code {
+    width: 200px !important;
+  }
+}
+
 @media (max-width: 600px) {
   .form {
     width: 70%;

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const http = axios.create({
-    baseURL: 'https://ota-api.herokuapp.com'
+    baseURL: 'http://localhost:5000'
 });
 
 http.defaults.headers.common['x-auth-token'] = localStorage.getItem("token");
