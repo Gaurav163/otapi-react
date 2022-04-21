@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Backdrop, CircularProgress, Snackbar } from "@mui/material";
 import http from "../../services/http";
-import { Add, Remove } from "@mui/icons-material";
+import { Add, Remove, Edit } from "@mui/icons-material";
 import CopyIcon from "@mui/icons-material/ContentCopy";
 import Access from "./tableaccess";
 import "./style.scss";
 
 const Project = () => {
+  let navigate = useNavigate();
   let [count, setCount] = useState(0);
   let [display, setDisplay] = useState({});
   let [info, setinfo] = useState({});
@@ -141,7 +142,11 @@ const Project = () => {
               "tabledetails " + (display[table.name] ? "" : "tablehide")
             }
           >
-            {table.name}.schema:
+            {table.name}.schema:{" "}
+            <Edit
+              sx={{ float: "right", cursor: "pointer" }}
+              onClick={() => navigate(`/edittable/${project}/${table.name}`)}
+            />
             <pre>{JSON.stringify(JSON.parse(table.schema), null, 4)}</pre>
             <Access info={info} table={table} loadproject={loadProject} />
           </div>
