@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/faq" element={<Faq />} />
-        
+
         <Route path="/signin" element={<Signin />} />
         <Route path="/verify/:token" element={<Verify />} />
         <Route path="/reset/:token" element={<Reset />} />
