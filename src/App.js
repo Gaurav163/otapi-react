@@ -1,5 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import { Footer, Dashboard, Signin, Signup, Verify, Reset, Navbar, Project, CreateTable, CreateProject, Faq } from "./components/_index";
+
+import { Dashboard, Signin, Signup, Verify, Reset, Navbar, Project, CreateTable, CreateProject, Faq, EditTable } from "./components/_index";
+
 
 import auth from "./services/auth";
 import React from 'react';
@@ -23,6 +25,8 @@ function App() {
         {user && <React.Fragment>
           <Route path="/project/:project" element={< Project />} />
           <Route path="/createtable/:project" element={<CreateTable />} />
+          <Route path="/edittable/:project/:table" element={<EditTable />} />
+
           <Route path="/createproject" element={<CreateProject />} />
           <Route path="/" element={<Dashboard />} />
         </React.Fragment>}
