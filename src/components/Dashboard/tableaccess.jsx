@@ -53,6 +53,7 @@ const Access = (props) => {
         setOpen(true);
         setMessage(resp.data.message);
         setLoading(false);
+        props.loadproject();
       }
     } catch (error) {
       console.log(error);
@@ -74,6 +75,7 @@ const Access = (props) => {
         setOpen(true);
         setMessage(resp.data.message);
         setLoading1(false);
+        props.loadproject();
       }
     } catch (error) {
       console.log("error", error);
@@ -88,7 +90,9 @@ const Access = (props) => {
   return (
     <div className="access">
       {temp.name}.access
-      <div className="helpButton" onClick={() => navigate("/faq?id=p4")}>help?</div>
+      <div className="helpButton" onClick={() => navigate("/faq?id=p4")}>
+        help?
+      </div>
       <br />
       {table.name === "users" && project.apiAuth ? (
         ////
