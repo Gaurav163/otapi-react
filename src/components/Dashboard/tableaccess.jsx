@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import CopyIcon from "@mui/icons-material/ContentCopy";
 import { Snackbar, CircularProgress } from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
 import http from "../../services/http";
 import "./style.scss";
 
 const Access = (props) => {
+  let navigate = useNavigate();
   const table = props.table;
   const project = props.info;
 
@@ -86,6 +88,7 @@ const Access = (props) => {
   return (
     <div className="access">
       {temp.name}.access
+      <div className="helpButton" onClick={() => navigate("/faq?id=p4")}>help?</div>
       <br />
       {table.name === "users" && project.apiAuth ? (
         ////

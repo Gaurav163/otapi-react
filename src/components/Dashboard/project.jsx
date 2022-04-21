@@ -130,7 +130,11 @@ const Project = () => {
         Generate New Key
       </button>
       <hr />
-      <div style={{ fontSize: "large", fontWeight: "500" }}>Tables</div>
+      <div style={{ fontSize: "large", fontWeight: "500" }}>
+        Tables
+        <div className="helpButton" onClick={() => navigate("/faq")}>help?</div>
+      </div>
+      
       {tables.map((table) => (
         <div key={table.name}>
           <div className="table" onClick={() => handleTableToggle(table.name)}>
@@ -149,6 +153,7 @@ const Project = () => {
             />
             <pre>{JSON.stringify(JSON.parse(table.schema), null, 4)}</pre>
             <Access info={info} table={table} loadproject={loadProject} />
+            
           </div>
         </div>
       ))}
