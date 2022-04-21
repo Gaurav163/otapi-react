@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Dashboard, Signin, Signup, Verify, Reset, Navbar, Project, CreateTable, CreateProject, Faq } from "./components/_index";
+import { Footer, Dashboard, Signin, Signup, Verify, Reset, Navbar, Project, CreateTable, CreateProject, Faq } from "./components/_index";
 
 import auth from "./services/auth";
 import React from 'react';
@@ -28,6 +28,7 @@ function App() {
         </React.Fragment>}
 
       </Routes>
+      <Footer />
 
     </div>
   );

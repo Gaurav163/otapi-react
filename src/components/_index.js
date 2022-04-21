@@ -8,4 +8,5 @@ export { default as Project } from "./Dashboard/project";
 export { default as CreateTable } from "./Dashboard/createtable";
 export { default as CreateProject } from "./Dashboard/createproject";
 export { default as Faq } from "./pages/faq";
+export { default as Footer } from "./Footer/footer";
 
