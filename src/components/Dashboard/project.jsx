@@ -99,11 +99,9 @@ const Project = () => {
       URL :{" "}
       <code
         className="keycopy"
-        onClick={() =>
-          handleCopy("https://ota-api.herokuapp.com/api/" + info.name)
-        }
+        onClick={() => handleCopy("http://localhost:5000/api/" + info.name)}
       >
-        {"https://ota-api.herokuapp.com/api/" + info.name}{" "}
+        {"http://localhost:5000/api/" + info.name}{" "}
         <CopyIcon fontSize="x-small" sx={{ cursor: "pointer" }} />
       </code>
       <br />
@@ -132,9 +130,10 @@ const Project = () => {
       <hr />
       <div style={{ fontSize: "large", fontWeight: "500" }}>
         Tables
-        <div className="helpButton" onClick={() => navigate("/faq")}>help?</div>
+        <div className="helpButton" onClick={() => navigate("/faq")}>
+          help?
+        </div>
       </div>
-      
       {tables.map((table) => (
         <div key={table.name}>
           <div className="table" onClick={() => handleTableToggle(table.name)}>
@@ -153,7 +152,6 @@ const Project = () => {
             />
             <pre>{JSON.stringify(JSON.parse(table.schema), null, 4)}</pre>
             <Access info={info} table={table} loadproject={loadProject} />
-            
           </div>
         </div>
       ))}

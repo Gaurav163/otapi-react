@@ -10,9 +10,9 @@ const Faq = () => {
   const questions = [
     {
       id: "p1",
-      question: "What is use of OTAPI?",
+      question: "What is use of SUPER-API?",
       answer:
-        "One Touch API provide you a platform where you can create api endpoints for your projects. OTAPI can be used to create api endpoints for your website, App or some other purpose.",
+        "Super API provide you a platform where you can create api endpoints for your projects. SUPER-API can be used to create api endpoints for your website, App or some other purpose.",
     },
     {
       id: "p2",

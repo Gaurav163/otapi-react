@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <Link to="/ " className="logo">
-        OTAPI
+        SUPER-API
       </Link>
       <div className="nav-link">
         <Link to="/faq">FAQs</Link>
